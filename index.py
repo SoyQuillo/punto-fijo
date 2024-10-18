@@ -197,7 +197,7 @@ def createTable(fn, x0, tolerance) -> float:
     e = 0
     while True:
         # Reemplazar x por el valor actual de la iteración
-        val = round(float(fn.subs(x, x0).evalf()), 4)
+        val = round(float(fn.subs(x, x0).evalf()), 4) # Evaluamos la funcion en el punto inicla x0 y lo redondeamos a 4 decimales
         color = "#155a8f" if n % 2 == 0 else "#1870b1"
 
         ctk.CTkLabel(tableFrame, text=n, fg_color=color).grid(
@@ -240,6 +240,7 @@ def createTable(fn, x0, tolerance) -> float:
 # Crear gráfica
 def createGraphic(fn, xf):
     # Imprimir gx, x y la intersección
+    #Representa la función g(x) que se obtuvo al despejar la ecuación original.
     x = sp.Symbol("x")
     plot = sp.plotting.plot
     plotter = plot(
@@ -249,7 +250,7 @@ def createGraphic(fn, xf):
         ylabel=fn,
         legend=True,
     )
-    plotter.append(
+    plotter.append( #Esta gráfica se utiliza para encontrar puntos de intersección con g(x), que son las soluciones donde g(x) = x.
         plot(
             x,
             show=False,
@@ -258,14 +259,14 @@ def createGraphic(fn, xf):
         )[0]
     )
     plotter.append(
-        plot(
+        plot(#Representa la aproximación final del valor de x encontrado mediante las iteraciones del método de punto fijo.
             xf,
             show=False,
             line_color="#263238",
             lengend=True,
         )[0]
     )
-    plotter.append(
+    plotter.append(#Esta línea sirve para indicar el valor de x donde g(x) = x ha sido alcanzado, que corresponde al punto fijo deseado.
         sp.plot_implicit(
             sp.Eq(x, xf),
             show=False,
